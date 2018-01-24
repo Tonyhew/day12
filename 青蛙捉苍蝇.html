@@ -53,7 +53,14 @@
 			},100)
 			
 			
+			var other = {};
 			
+			other.__proto__ = new fly();
+			other.init();
+			other.div.style.backgroundImage = "url(img/bug_2.png)";
+			other.move = function(){this.setPosition(this.x+this.xv,this.y+this.yv);}
+			container.appendChild(other.div);
+			flies.push(other);
 			
 			function fly(){
 				this.width = Math.random()*20+20;
