@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+		<style type="text/css">
+			.container{
+				width: 500px;
+				height: 400px;
+				border: 1px solid red;
+				margin: 50px auto;
+				position: relative;
+				overflow: hidden;
+				
+			}
+			
+			.fly{
+				position: absolute;
+				left: 0;
+				top: 0;
+				background-image: url(img/bug_1.png);
+				background-size: cover;
+				-webkit-transform: rotate(45deg);
+			}
+			
+		</style>
+		
+	</head>
+	<body>
+		
+		<div class="container"></div>
+		
+		<script type="text/javascript">
+			var container = document.querySelector(".container");
+			var n = 20;
+			var flies = [];
+			
+			for(var i=0;i<n;i++){
+				var f = new fly();
+				flies.push(f);
+				f.init();
+				container.appendChild(f.div);
+			}
+			
+			var t = setInterval(function(){
+				
+				for(var i=0;i<flies.length;i++){
+					flies[i].move()
+				}	
+				
+				
+			},100)
+			
+			
+			
+			
+			function fly(){
+				this.width = Math.random()*20+20;
+				this.height = this.width;
+				
+				this.x = Math.random()*(container.offsetWidth - this.width);
+				this.y = Math.random()*(container.offsetHeight - this.height);
+				
+				this.d = Math.random()*360;
+				this.v = 5;
+				
+				this.xv = Math.cos(this.d/180*Math.PI)*this.v;
+				this.yv = Math.sin(this.d/180*Math.PI)*this.v;
+				
+				this.div = document.createElement("div");
+				
+				this.setPosition = function(x,y){
+					x = x<0-this.width?container.offsetWidth:x;
+					x = x>container.offsetWidth?0-this.width:x;
+					
+					y = x<0-this.height?container.offsetHeight:y;
+					y = y>container.offsetHeight?0-this.height:y;
+					this.x = x;
+					this.y = y;
+					this.div.style.left = this.x+"px";
+					this.div.style.top = this.y+"px";
+				}
+				
+				this.init = function(){
+					this.div.setAttribute("class","fly");
+					this.div.style.width = this.width+'px';
+					this.div.style.height = this.height+'px';
+					
+					this.setPosition(this.x,this.y);
+				}
+				
+				this.move = function(){
+					this.setPosition(this.x+this.xv,this.y+this.yv);
+				}
+				
+			}
+			
+			
+			
+			
+		</script>
+	</body>
+</html>
